@@ -1,0 +1,57 @@
+<html>
+  <body>
+    <script>
+      const svgNamespace = "http://www.w3.org/2000/svg";
+      let svgElement;
+      let circle;
+
+      // setup the SVG canvas
+      function addSvg(element) {
+        svgElement = document.createElementNS(svgNamespace, "svg");
+        svgElement.setAttribute("width", "200");
+        svgElement.setAttribute("height", "200");
+        svgElement.setAttribute("style", "border: 5px solid purple;");
+        // Add to an existing container in the DOM
+        document.body.appendChild(svgElement);
+      }
+
+      // add a circle to the SVG scene
+      function addCircle(element) {
+        circle = document.createElementNS(svgNamespace, "circle");
+        circle.setAttribute("cx", "50");
+        circle.setAttribute("cy", "50");
+        circle.setAttribute("r", "25");
+        circle.setAttribute("fill", "blue");
+        circle.setAttribute("stroke", "red");
+        svgElement.appendChild(circle);
+      }
+
+      // move the last circle added to the SVG scene
+      function moveCircle(element) {
+        if (circle) {
+          // Move the circle 10 units to the right
+          circle.setAttribute("cx", parseFloat( circle.getAttribute("cx") ) + 10);
+        }
+      }
+
+      // animate the last circle added to the SVG scene
+      function ani(element) {
+        if (circle) {
+          let pos = parseFloat( circle.getAttribute("cx") );
+          circle.setAttribute("cx", pos + .2);
+
+          pos = parseFloat( circle.getAttribute("cx") );
+          if (pos < 100) {
+              requestAnimationFrame(ani);
+          }
+        }
+      }
+    </script>
+
+    <button onclick="addSvg(this)">addSvg</button>
+    <button onclick="addCircle(this)">addCircle</button>
+    <button onclick="moveCircle(this)">moveCircle</button>
+    <button onclick="ani(this)">animate right until x=100</button>
+  </body>
+</html>
+
